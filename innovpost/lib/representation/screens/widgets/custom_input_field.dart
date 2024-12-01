@@ -1,78 +1,52 @@
 import 'package:flutter/material.dart';
 
-class CustomInputField extends StatefulWidget {
+class CustomInputField extends StatelessWidget {
   final String labelText;
   final String hintText;
-  final bool suffixIcon;
-  final bool? isDense;
   final bool obscureText;
-  final TextEditingController? controller;
+  final bool suffixIcon;
+  final bool isDense;
+  final TextEditingController controller;
 
-  const CustomInputField(
-      {Key? key,
-      required this.labelText,
-      required this.hintText,
-      this.suffixIcon = false,
-      this.isDense,
-      this.obscureText = false,
-      this.controller})
-      : super(key: key);
+  const CustomInputField({
+    this.isDense = false,
+    super.key,
+    required this.labelText,
+    required this.hintText,
+    this.obscureText = false,
+    this.suffixIcon = false,
+    required this.controller,
+  });
 
-  @override
-  State<CustomInputField> createState() => _CustomInputFieldState();
-}
-
-class _CustomInputFieldState extends State<CustomInputField> {
-  bool _obscureText = true;
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Container(
-      width: size.width * 0.9,
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
-      child: Column(
-        children: [
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              widget.labelText,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-          ),
-          TextFormField(
-            obscureText: (widget.obscureText && _obscureText),
-            decoration: InputDecoration(
-              isDense: (widget.isDense != null) ? widget.isDense : false,
-              hintText: widget.hintText,
-              suffixIcon: widget.suffixIcon
-                  ? IconButton(
-                      icon: Icon(
-                        _obscureText
-                            ? Icons.remove_red_eye
-                            : Icons.visibility_off_outlined,
-                        color: Colors.black54,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _obscureText = !_obscureText;
-                        });
-                      },
-                    )
-                  : null,
-              suffixIconConstraints: (widget.isDense != null)
-                  ? const BoxConstraints(maxHeight: 33)
-                  : null,
-            ),
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: (textValue) {
-              if (textValue == null || textValue.isEmpty) {
-                return 'required!';
-              }
-              return null;
-            },
-            controller: widget.controller,
-          ),
-        ],
+    return TextFormField(
+      controller: controller,
+      obscureText: obscureText,
+      decoration: InputDecoration(
+        labelText: labelText,
+        hintText: hintText,
+        hintStyle: TextStyle(color: Colors.grey[500]),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey[200]!),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey[200]!),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey[400]!),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        suffixIcon: suffixIcon
+            ? IconButton(
+                icon: const Icon(Icons.visibility_off),
+                onPressed: () {
+                  // TODO: Implement password visibility toggle
+                },
+              )
+            : null,
       ),
     );
   }

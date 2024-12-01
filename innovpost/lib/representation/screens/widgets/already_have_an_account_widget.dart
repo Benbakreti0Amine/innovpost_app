@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AlreadyHaveAnAccountWidget extends StatelessWidget {
   const AlreadyHaveAnAccountWidget({
@@ -10,23 +10,23 @@ class AlreadyHaveAnAccountWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const Text(
-            'Already have an account ? ',
+            'already have an account ? ',
             style: TextStyle(
-                fontSize: 13,
-                color: Color(0xff939393),
-                fontWeight: FontWeight.bold),
+              fontSize: 12,
+              color: Color(0xff939393),
+            ),
           ),
           GestureDetector(
-            onTap: () => {Navigator.pop(context)},
+            onTap: () => {GoRouter.of(context).pop()},
             child: const Text(
               'Log-in',
               style: TextStyle(
-                  fontSize: 15,
-                  color: Color(0xff748288),
+                  fontSize: 12,
+                  color: Colors.blue,
                   fontWeight: FontWeight.bold),
             ),
           ),

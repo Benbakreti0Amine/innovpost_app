@@ -3,20 +3,31 @@ import 'package:flutter/material.dart';
 class CustomFormButton extends StatelessWidget {
   final String innerText;
   final void Function()? onPressed;
-  const CustomFormButton({Key? key, required this.innerText, required this.onPressed}) : super(key: key);
+
+  const CustomFormButton({
+    super.key,
+    required this.innerText,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Container(
-      width: size.width * 0.8,
-      decoration: BoxDecoration(
-        color: const Color(0xff233743),
-        borderRadius: BorderRadius.circular(26),
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        minimumSize: const Size.fromHeight(60),
+        backgroundColor: Colors.blue,
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
       ),
-      child: TextButton(
-        onPressed: onPressed,
-        child: Text(innerText, style: const TextStyle(color: Colors.white, fontSize: 20),),
+      child: Text(
+        innerText,
+        style: const TextStyle(
+          fontSize: 16,
+          color: Colors.white,
+        ),
       ),
     );
   }
