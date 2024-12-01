@@ -1,98 +1,123 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:happy_tech_mastering_api_with_flutter/core/Gotouter.dart';
+import 'package:happy_tech_mastering_api_with_flutter/representation/cubit/post_cubit.dart';
+import 'package:happy_tech_mastering_api_with_flutter/representation/cubit/user_signupcubit.dart';
 
 class qr_code extends StatefulWidget {
   const qr_code({super.key});
 
   @override
-  State<qr_code> createState() => _qr_codeState();
+  State<qr_code> createState() => _QRCodeScreenState();
 }
 
-class _qr_codeState extends State<qr_code> {
+class _QRCodeScreenState extends State<qr_code> {
+  String _scanResult = 'Not yet scanned';
+
+  Future<void> _scanQR() async {
+    String barcodeScanRes;
+    try {
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+        '#003B95',
+        'Cancel',
+        true,
+        ScanMode.QR,
+      );
+    } catch (e) {
+      barcodeScanRes = 'Failed to get scanning result';
+    }
+
+    if (!mounted) return;
+    context.read<PostCubit>().getPosts(barcodeScanRes);
+
+    setState(() {
+      _scanResult = barcodeScanRes;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        MobileScanner(
-          controller: MobileScannerController(
-            returnImage: true,
-            detectionSpeed: DetectionSpeed.noDuplicates,
+    return BlocConsumer<PostCubit, PostState>(
+      listener: (context, state) {
+        if (state is PostSuccess) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(state.postModel.last_name),
+          ));
+          GoRouter.of(context).push(routerapp.CardViewpath);
+        }
+        if (state is PostFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(state.errmessage),
+          ));
+        }
+      },
+      builder: (context, state) {
+        print(state);
+        return Expanded(
+          child: SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // Tabs
+
+                // Scan Button
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: _scanQR,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xff2185D5),
+                          shape: const CircleBorder(),
+                          padding: const EdgeInsets.all(24),
+                        ),
+                        child: const Icon(
+                          Icons.qr_code_scanner,
+                          size: 40,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        _scanResult,
+                        style: GoogleFonts.poppins(fontSize: 16),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
-          onDetect: (capture) {
-            final List<Barcode> barcodes = capture.barcodes;
-            final Uint8List? image = capture.image;
-            for (final barcode in barcodes) {
-              debugPrint('Barcode found! ${barcode.rawValue}');
-            }
-          },
-        ),
-        CustomPaint(
-          painter: ScannerOverlay(),
-          child: const SizedBox(
-            width: double.infinity,
-            height: double.infinity,
-          ),
-        ),
-      ],
+        );
+      },
     );
   }
-}
 
-class ScannerOverlay extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final double scanAreaSize = size.width * 0.7;
-    final double left = (size.width - scanAreaSize) / 2;
-    final double top = (size.height - scanAreaSize) / 2;
-    final double right = left + scanAreaSize;
-    final double bottom = top + scanAreaSize;
-
-    final Paint backgroundPaint = Paint()
-      ..color = Colors.black.withOpacity(0.5);
-
-    final Paint borderPaint = Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 3.0;
-
-    // Draw the semi-transparent background
-    canvas.drawRect(
-        Rect.fromLTWH(0, 0, size.width, size.height), backgroundPaint);
-
-    // Draw the transparent scanner area
-    canvas.drawRect(Rect.fromLTRB(left, top, right, bottom),
-        Paint()..blendMode = BlendMode.clear);
-
-    // Draw the white border around the scanner area
-    canvas.drawRect(Rect.fromLTRB(left, top, right, bottom), borderPaint);
-
-    // Draw corner markers
-    const double cornerSize = 20;
-    canvas.drawLine(
-        Offset(left, top), Offset(left + cornerSize, top), borderPaint);
-    canvas.drawLine(
-        Offset(left, top), Offset(left, top + cornerSize), borderPaint);
-
-    canvas.drawLine(
-        Offset(right, top), Offset(right - cornerSize, top), borderPaint);
-    canvas.drawLine(
-        Offset(right, top), Offset(right, top + cornerSize), borderPaint);
-
-    canvas.drawLine(
-        Offset(left, bottom), Offset(left + cornerSize, bottom), borderPaint);
-    canvas.drawLine(
-        Offset(left, bottom), Offset(left, bottom - cornerSize), borderPaint);
-
-    canvas.drawLine(
-        Offset(right, bottom), Offset(right - cornerSize, bottom), borderPaint);
-    canvas.drawLine(
-        Offset(right, bottom), Offset(right, bottom - cornerSize), borderPaint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
+  Widget _buildTabButton(String title, {required bool isSelected}) {
+    return Expanded(
+      child: ElevatedButton(
+        onPressed: () {},
+        style: ElevatedButton.styleFrom(
+          backgroundColor: isSelected ? const Color(0xff2185D5) : Colors.white,
+          foregroundColor: isSelected ? Colors.white : const Color(0xff2185D5),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+            side: BorderSide(
+              color: isSelected ? Colors.transparent : const Color(0xff2185D5),
+            ),
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 12),
+        ),
+        child: Text(
+          title,
+          style: GoogleFonts.poppins(fontSize: 16),
+        ),
+      ),
+    );
   }
 }

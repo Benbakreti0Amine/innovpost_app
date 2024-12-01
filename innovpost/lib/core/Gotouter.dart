@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:happy_tech_mastering_api_with_flutter/representation/screens/formscreen.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/homeview.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/sign_in_screen.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/sign_up_screen.dart';
@@ -29,7 +30,7 @@ abstract class routerapp {
         },
       ),
       GoRoute(
-        path: scan,
+        path: HomePath,
         builder: (context, state) {
           return const Home_view();
         },
@@ -44,6 +45,12 @@ abstract class routerapp {
         path: signup,
         builder: (context, state) {
           return const SignUpScreen();
+        },
+      ),
+      GoRoute(
+        path: CardViewpath,
+        builder: (context, state) {
+          return const ModernProFormScreen();
         },
       ),
     ],

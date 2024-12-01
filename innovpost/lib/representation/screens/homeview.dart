@@ -1,7 +1,15 @@
 import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:happy_tech_mastering_api_with_flutter/representation/screens/FaQ.dart';
+import 'package:happy_tech_mastering_api_with_flutter/representation/screens/formule.dart';
+import 'package:happy_tech_mastering_api_with_flutter/representation/screens/homeviewbody.dart';
+import 'package:happy_tech_mastering_api_with_flutter/representation/screens/profile.dart';
+import 'package:happy_tech_mastering_api_with_flutter/representation/screens/profile_screen.dart';
+import 'package:happy_tech_mastering_api_with_flutter/representation/screens/tutoscreen.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/widgets/custombuttombar.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/widgets/qr_code.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -15,6 +23,14 @@ class Home_view extends StatefulWidget {
 
 class _Home_viewState extends State<Home_view> {
   int selectedIndex = 0;
+  int selectedtype = 0;
+  List views = [
+    const Homeviewbody(),
+    const Tutoscreen(),
+    FAQScreen(),
+    const SimpleUserProfileScreen(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,6 +71,6 @@ class _Home_viewState extends State<Home_view> {
             ),
           ),
         ),
-        body: const qr_code());
+        body: views[selectedIndex]);
   }
 }

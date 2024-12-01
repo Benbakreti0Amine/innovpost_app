@@ -9,7 +9,7 @@ abstract class ApiConsumer {
     Object? data,
     Map<String, dynamic>? queryParameters,
     bool isFromData = false,
-  });// with no body which means the inherited dio must add logic for these methods
+  }); // with no body which means the inherited dio must add logic for these methods
   Future<dynamic> patch(
     String path, {
     Object? data,

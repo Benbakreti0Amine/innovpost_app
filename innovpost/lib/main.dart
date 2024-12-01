@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:happy_tech_mastering_api_with_flutter/core/Gotouter.dart';
+import 'package:happy_tech_mastering_api_with_flutter/representation/cubit/post_cubit.dart';
 
 import 'cache/cachehelper.dart';
 import 'core/api/dio_consumer.dart';
@@ -19,6 +20,9 @@ void main() {
         ),
         BlocProvider(
           create: (context) => SignUpCubit(DioConsumer(dio: Dio())),
+        ),
+        BlocProvider(
+          create: (context) => PostCubit(DioConsumer(dio: Dio())),
         ),
       ],
       child: const MyApp(),

@@ -17,15 +17,15 @@ class custombottombar extends StatelessWidget {
       items: [
         CustomNavigationBarItem(
             icon: const Icon(
-              IconlyLight.home,
+              IconlyLight.scan,
               color: Colors.white,
             ),
             selectedIcon: const Icon(
-              IconlyBold.home,
+              IconlyBold.scan,
               color: Colors.white,
             ),
             selectedTitle: const Text(
-              'Home',
+              'QR',
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -33,15 +33,15 @@ class custombottombar extends StatelessWidget {
             )),
         CustomNavigationBarItem(
             icon: const Icon(
-              IconlyLight.chart,
+              IconlyLight.video,
               color: Colors.white,
             ),
             selectedIcon: const Icon(
-              IconlyBold.chart,
+              IconlyBold.video,
               color: Colors.white,
             ),
             selectedTitle: const Text(
-              'chart',
+              'Videos',
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -49,15 +49,15 @@ class custombottombar extends StatelessWidget {
             )),
         CustomNavigationBarItem(
             icon: const Icon(
-              IconlyLight.bag,
+              IconlyLight.calendar,
               color: Colors.white,
             ),
             selectedIcon: const Icon(
-              IconlyBold.bag,
+              IconlyBold.calendar,
               color: Colors.white,
             ),
             selectedTitle: const Text(
-              'carte',
+              'FaQ',
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -65,15 +65,15 @@ class custombottombar extends StatelessWidget {
             )),
         CustomNavigationBarItem(
             icon: const Icon(
-              IconlyLight.document,
+              IconlyLight.profile,
               color: Colors.white,
             ),
             selectedIcon: const Icon(
-              IconlyBold.document,
+              IconlyBold.profile,
               color: Colors.white,
             ),
             selectedTitle: const Text(
-              'Orders',
+              'Profile',
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,

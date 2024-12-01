@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:happy_tech_mastering_api_with_flutter/core/api/api_interceptors.dart';
 
 import '../errors/exceptions.dart';
 import 'api_consumer.dart';
 import 'end_ponits.dart';
-
 
 class DioConsumer extends ApiConsumer {
   final Dio dio;
@@ -11,7 +11,7 @@ class DioConsumer extends ApiConsumer {
   DioConsumer({required this.dio}) {
     dio.options.baseUrl = EndPoint.baseUrl;
     dio.options.headers = {'Content-Type': 'application/json'};
-    // dio.interceptors.add(ApiInterceptor());
+    dio.interceptors.add(ApiInterceptor());
     dio.interceptors.add(LogInterceptor(
       request: true,
       requestHeader: true,

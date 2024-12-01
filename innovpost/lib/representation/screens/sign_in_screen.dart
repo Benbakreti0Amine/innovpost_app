@@ -27,7 +27,7 @@ class SignInScreen extends StatelessWidget {
               ),
             );
             context.read<SignInCubit>().getUserData();
-            GoRouter.of(context).push(routerapp.scan);
+            GoRouter.of(context).push(routerapp.HomePath);
           } else if (state is SignInFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
