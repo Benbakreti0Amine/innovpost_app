@@ -23,11 +23,18 @@ class SignInCubit extends Cubit<UserState> {
   signIn() async {
     emit(SignInLoading());
     try {
+      print('///--///////:');
+      print(signInEmail.text);
+      print(signInPassword.text);
       final response = await api.post(EndPoint.signIn, data: {
         ApiKey.email: signInEmail.text,
         ApiKey.password: signInPassword.text,
       });
+      print(response);
+      print('/////////////////:');
+      print(response);
       user = UserSignin.fromJson(response);
+      print(user);
 
       try {
         final decodedToken = JwtDecoder.decode(user!.token);

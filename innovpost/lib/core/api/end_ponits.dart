@@ -1,8 +1,8 @@
 class EndPoint {
-  static String baseUrl = "http://127.0.0.1:8000/";
+  static String baseUrl = "http://192.168.15.79:8000/";
   static String signIn = "users/login/";
   static String signUp = "users/createuser/";
-  static String getUser(dynamic id){
+  static String getUser(dynamic id) {
     return "users/list/$id/";
   }
 }
@@ -19,6 +19,5 @@ class ApiKey {
   static String firstname = "first_name";
   static String lastname = "last_name";
   static String is_active = "is_active";
-  
 }
 //

@@ -122,6 +122,14 @@ class SignUpScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 16),
                               CustomInputField(
+                                labelText: 'Username',
+                                hintText: 'Enter votre Username...',
+                                isDense: true,
+                                controller:
+                                    context.read<SignUpCubit>().signUpName,
+                              ),
+                              const SizedBox(height: 16),
+                              CustomInputField(
                                 labelText: 'Password',
                                 hintText: '******',
                                 isDense: true,

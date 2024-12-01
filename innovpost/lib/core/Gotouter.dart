@@ -7,6 +7,7 @@ import 'package:happy_tech_mastering_api_with_flutter/representation/screens/sig
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/sign_up_screen.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/splashScreen.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/widgets/qr_code.dart';
+import 'package:happy_tech_mastering_api_with_flutter/representation/screens/widgets/test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class routerapp {
@@ -24,13 +25,13 @@ abstract class routerapp {
       GoRoute(
         path: '/',
         builder: (context, state) {
-          return const Home_view();
+          return const Splashscreen();
         },
       ),
       GoRoute(
         path: scan,
         builder: (context, state) {
-          return const qr_code();
+          return const Home_view();
         },
       ),
       GoRoute(

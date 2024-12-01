@@ -27,12 +27,7 @@ class SignInScreen extends StatelessWidget {
               ),
             );
             context.read<SignInCubit>().getUserData();
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const ProfileScreen(),
-              ),
-            );
+            GoRouter.of(context).push(routerapp.scan);
           } else if (state is SignInFailure) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -144,8 +139,11 @@ class SignInScreen extends StatelessWidget {
                                       : CustomFormButton(
                                           innerText: 'Se connecter',
                                           onPressed: () {
-                                            GoRouter.of(context)
-                                                .push(routerapp.scan);
+                                            print('hello');
+                                            context
+                                                .read<SignInCubit>()
+                                                .signIn();
+                                            print('hello');
                                           },
                                         ),
                                   const SizedBox(
